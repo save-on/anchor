@@ -1,0 +1,14 @@
+[
+{
+  "directory": "/home/saveon/bugGenerator/cpp/anchor/ninja",
+  "command": "/usr/bin/c++ -I/home/saveon/bugGenerator/cpp/anchor/include -o CMakeFiles/anchor.dir/src/main.cpp.o -c /home/saveon/bugGenerator/cpp/anchor/src/main.cpp",
+  "file": "/home/saveon/bugGenerator/cpp/anchor/src/main.cpp",
+  "output": "/home/saveon/bugGenerator/cpp/anchor/ninja/CMakeFiles/anchor.dir/src/main.cpp.o"
+},
+{
+  "directory": "/home/saveon/bugGenerator/cpp/anchor/ninja",
+  "command": "/usr/bin/c++ -I/home/saveon/bugGenerator/cpp/anchor/include -o CMakeFiles/anchor.dir/src/banner.cpp.o -c /home/saveon/bugGenerator/cpp/anchor/src/banner.cpp",
+  "file": "/home/saveon/bugGenerator/cpp/anchor/src/banner.cpp",
+  "output": "/home/saveon/bugGenerator/cpp/anchor/ninja/CMakeFiles/anchor.dir/src/banner.cpp.o"
+}
+]

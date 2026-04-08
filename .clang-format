@@ -1,0 +1,55 @@
+# Disable Formatting
+DisableFormat: false
+
+# Style
+BasedOnStyle: LLVM
+
+# Tab spacing for Modifiers (ex. public: )
+AccessModifierOffset: 0
+
+# Align Argument and Parameters
+AlignAfterOpenBracket: Align
+
+# Aligns Consecutive Assignments
+AlignConsecutiveAssignments:
+  Enabled: true
+  AcrossEmptyLines: true
+  AcrossComments: false
+  AlignCompound: true
+  PadOperators: false
+
+# Aligns Consecutive Declarations
+AlignConsecutiveDeclarations:
+  Enabled: true
+  AcrossEmptyLines: false
+  AcrossComments: false
+  AlignFunctionDeclarations: true
+  AlignFunctionPointers: true
+
+# Number of columns to use to indent
+BracedInitializerIndentWidth: 4
+IndentWidth: 4
+
+# Indent width for line continuation
+ContinuationIndentWidth: 4
+
+# Indentation used for Namespace
+NamespaceIndentation: All
+
+# Breaks at Adjacent Strings
+BreakAdjacentStringLiterals: true
+
+# Breaks before ternary operators
+BreakBeforeTernaryOperators: true
+
+# Column Limit
+ColumnLimit: 100
+
+# Empty line before access modifiers
+EmptyLineBeforeAccessModifier: Always
+
+# Enum trailing commas
+EnumTrailingComma: Remove
+
+# Namespace comments
+FixNamespaceComments: false

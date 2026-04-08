@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/saveon/bugGenerator/cpp/anchor/ninja/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
