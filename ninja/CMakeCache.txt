@@ -221,6 +221,12 @@ CMAKE_TAPI:FILEPATH=CMAKE_TAPI-NOTFOUND
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
+//Arguments to supply to pkg-config
+PKG_CONFIG_ARGN:STRING=
+
+//pkg-config executable
+PKG_CONFIG_EXECUTABLE:FILEPATH=/usr/bin/pkg-config
+
 //Value Computed by CMake
 anchor_BINARY_DIR:STATIC=/home/saveon/bugGenerator/cpp/anchor/ninja
 
@@ -229,6 +235,15 @@ anchor_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
 anchor_SOURCE_DIR:STATIC=/home/saveon/bugGenerator/cpp/anchor
+
+//Path to a library.
+pkgcfg_lib_GST_glib-2.0:FILEPATH=/usr/lib/libglib-2.0.so
+
+//Path to a library.
+pkgcfg_lib_GST_gobject-2.0:FILEPATH=/usr/lib/libgobject-2.0.so
+
+//Path to a library.
+pkgcfg_lib_GST_gstreamer-1.0:FILEPATH=/usr/lib/libgstreamer-1.0.so
 
 
 ########################
@@ -384,4 +399,54 @@ CMAKE_TAPI-ADVANCED:INTERNAL=1
 CMAKE_UNAME:INTERNAL=/usr/bin/uname
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//Details about finding PkgConfig
+FIND_PACKAGE_MESSAGE_DETAILS_PkgConfig:INTERNAL=[/usr/bin/pkg-config][v2.5.1()]
+GST_CFLAGS:INTERNAL=-I/usr/include/gstreamer-1.0;-I/usr/include;-I/usr/include/glib-2.0;-I/usr/lib/glib-2.0/include;-I/usr/include/sysprof-6;-pthread
+GST_CFLAGS_I:INTERNAL=
+GST_CFLAGS_OTHER:INTERNAL=-pthread
+GST_FOUND:INTERNAL=1
+GST_INCLUDEDIR:INTERNAL=/usr/include
+GST_INCLUDE_DIRS:INTERNAL=/usr/include/gstreamer-1.0;/usr/include;/usr/include/glib-2.0;/usr/lib/glib-2.0/include;/usr/include/sysprof-6
+GST_LDFLAGS:INTERNAL=-L/usr/lib;-lgstreamer-1.0;-lgobject-2.0;-lglib-2.0
+GST_LDFLAGS_OTHER:INTERNAL=
+GST_LIBDIR:INTERNAL=/usr/lib
+GST_LIBRARIES:INTERNAL=gstreamer-1.0;gobject-2.0;glib-2.0
+GST_LIBRARY_DIRS:INTERNAL=/usr/lib
+GST_LIBS:INTERNAL=
+GST_LIBS_L:INTERNAL=
+GST_LIBS_OTHER:INTERNAL=
+GST_LIBS_PATHS:INTERNAL=
+GST_MODULE_NAME:INTERNAL=gstreamer-1.0
+GST_PREFIX:INTERNAL=/usr
+GST_STATIC_CFLAGS:INTERNAL=-I/usr/include/gstreamer-1.0;-I/usr/include;-I/usr/include/glib-2.0;-I/usr/lib/glib-2.0/include;-I/usr/include/sysprof-6;-pthread;-DLZMA_API_STATIC
+GST_STATIC_CFLAGS_I:INTERNAL=
+GST_STATIC_CFLAGS_OTHER:INTERNAL=-pthread;-DLZMA_API_STATIC
+GST_STATIC_INCLUDE_DIRS:INTERNAL=/usr/include/gstreamer-1.0;/usr/include;/usr/include/glib-2.0;/usr/lib/glib-2.0/include;/usr/include/sysprof-6
+GST_STATIC_LDFLAGS:INTERNAL=-L/usr/lib;-lgstreamer-1.0;-lm;-ldl;-latomic;-lnsl;-lgobject-2.0;-lffi;-lgmodule-2.0;-pthread;-lglib-2.0;-latomic;-lm;-lsysprof-capture-4;-Wl,-z,nodelete;-pthread;-lpcre2-8;-pthread;-lpthread;-lunwind;-ldw;-lbz2;-lelf;-lz;-llzma;-pthread;-lpthread;-lzstd
+GST_STATIC_LDFLAGS_OTHER:INTERNAL=-pthread;-Wl,-z,nodelete;-pthread;-pthread;-pthread
+GST_STATIC_LIBDIR:INTERNAL=
+GST_STATIC_LIBRARIES:INTERNAL=gstreamer-1.0;m;dl;atomic;nsl;gobject-2.0;ffi;gmodule-2.0;glib-2.0;atomic;m;sysprof-capture-4;pcre2-8;pthread;unwind;dw;bz2;elf;z;lzma;pthread;zstd
+GST_STATIC_LIBRARY_DIRS:INTERNAL=/usr/lib
+GST_STATIC_LIBS:INTERNAL=
+GST_STATIC_LIBS_L:INTERNAL=
+GST_STATIC_LIBS_OTHER:INTERNAL=
+GST_STATIC_LIBS_PATHS:INTERNAL=
+GST_VERSION:INTERNAL=1.28.1
+GST_gstreamer-1.0_INCLUDEDIR:INTERNAL=
+GST_gstreamer-1.0_LIBDIR:INTERNAL=
+GST_gstreamer-1.0_PREFIX:INTERNAL=
+GST_gstreamer-1.0_VERSION:INTERNAL=
+//ADVANCED property for variable: PKG_CONFIG_ARGN
+PKG_CONFIG_ARGN-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PKG_CONFIG_EXECUTABLE
+PKG_CONFIG_EXECUTABLE-ADVANCED:INTERNAL=1
+__pkg_config_arguments_GST:INTERNAL=REQUIRED;gstreamer-1.0
+__pkg_config_checked_GST:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_GST_glib-2.0
+pkgcfg_lib_GST_glib-2.0-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_GST_gobject-2.0
+pkgcfg_lib_GST_gobject-2.0-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_GST_gstreamer-1.0
+pkgcfg_lib_GST_gstreamer-1.0-ADVANCED:INTERNAL=1
+prefix_result:INTERNAL=/usr/lib
 
