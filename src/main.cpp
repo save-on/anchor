@@ -23,21 +23,22 @@ int main(int argc, char *argv[]) {
     */
 
     data.source   = gst_element_factory_make("v4l2src", NULL);
-    data.convert  = gst_element_factory_make("videoconvert", NULL);
-    data.sink     = gst_element_factory_make("xvimagesink", NULL);
+    data.sink     = gst_element_factory_make("filesink", NULL);
     data.pipeline = gst_pipeline_new("testpipeline");
 
-    if (!data.pipeline || !data.source || !data.convert || !data.sink) {
+    if (!data.pipeline || !data.source || !data.sink) {
         std::cout << "not all elements could be created\n";
         return 1;
     }
 
-    gst_bin_add_many((GstBin *)(data.pipeline), data.source, data.convert, data.sink, NULL);
-    if (gst_element_link_many(data.source, data.convert, data.sink, NULL) != TRUE) {
+    gst_bin_add_many((GstBin *)(data.pipeline), data.source, data.sink, NULL);
+    if (gst_element_link_many(data.source, data.sink, NULL) != TRUE) {
         std::cout << "elements could not be linked\n";
         gst_object_unref(data.pipeline);
         return 1;
     }
+    g_object_set(data.sink, "location", "../output/video.mp4", NULL);
+    g_object_set(data.source, "do-timestamp", TRUE, NULL);
 
     ret = gst_element_set_state(data.pipeline, GST_STATE_PLAYING);
     if (ret == GST_STATE_CHANGE_FAILURE) {

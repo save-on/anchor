@@ -12,16 +12,19 @@
 
 *Record*
 > Build Record pipeline
-  - Should take in webcame souce
-  - bring it to screen sink
-  - update so that sink is a file
+  - Should take in webcame souce *
+  - bring it to screen sink *
+  - update so that sink is a file (filesink, rsfilesink)
+   - Video must be written to file *
+   Bugs
+   - Video playback is fast when recording is dark
 
 *Terminate*
   -Should be waiting for a signal upon each loop ready to terminate
    the program
 
 *Send Recording Chunks to file*
- !Would have to create a dir to store the chunks should include
+ !Would have to create a dir to store the chunks(HLS) should include
   date timestamp
  !May have to create custom filters
  !These Filters should take in data via a source pad
