@@ -5,7 +5,7 @@
 #include <unistd.h>
 
 struct CustomData {
-    GstElement *pipeline, *source, *sink, *convert;
+    GstElement *pipeline, *source, *sink, *videorate;
 };
 
 int main(int argc, char *argv[]) {
@@ -22,17 +22,18 @@ int main(int argc, char *argv[]) {
         attach a screen sink
     */
 
-    data.source   = gst_element_factory_make("v4l2src", NULL);
-    data.sink     = gst_element_factory_make("filesink", NULL);
-    data.pipeline = gst_pipeline_new("testpipeline");
+    data.source    = gst_element_factory_make("v4l2src", NULL);
+    data.videorate = gst_element_factory_make("videorate", NULL);
+    data.sink      = gst_element_factory_make("filesink", NULL);
+    data.pipeline  = gst_pipeline_new("anchor_pipeline");
 
-    if (!data.pipeline || !data.source || !data.sink) {
+    if (!data.pipeline || !data.source || !data.videorate || !data.sink) {
         std::cout << "not all elements could be created\n";
         return 1;
     }
 
-    gst_bin_add_many((GstBin *)(data.pipeline), data.source, data.sink, NULL);
-    if (gst_element_link_many(data.source, data.sink, NULL) != TRUE) {
+    gst_bin_add_many((GstBin *)(data.pipeline), data.source, data.videorate, data.sink, NULL);
+    if (gst_element_link_many(data.source, data.videorate, data.sink, NULL) != TRUE) {
         std::cout << "elements could not be linked\n";
         gst_object_unref(data.pipeline);
         return 1;
