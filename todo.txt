@@ -17,7 +17,8 @@
   - update so that sink is a file (filesink, rsfilesink)
    - Video must be written to file *
    Bugs
-   - Video playback is fast when recording is dark (could be a camera issue)
+   - Video playback is fast when recording is dark (could be a camera issue)*
+   - Audio playback on file not working
 
 *Terminate*
   -Should be waiting for a signal upon each loop ready to terminate
