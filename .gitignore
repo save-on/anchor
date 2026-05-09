@@ -2,6 +2,7 @@
 anchor.txt
 output/
 ninja/
+ninja-debug/
 *.log
 
 # --- Environment Variables ---

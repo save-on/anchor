@@ -5,16 +5,17 @@
 #include <iostream>
 #include <unistd.h>
 
-struct VideoData {
+struct VideoElementData {
     GstElement *videorate, *queue;
 };
 
-struct AudioData {
+struct AudioElementData {
     GstElement *convert, *queue, *resample;
 };
 
 struct PadData {
-    GstPad *teeAudio, *teeVideo, *queueAudio, *queueVideo, *funnelAudio, *funnelVideo;
+    GstPad *teeAudio, *teeVideo, *queueAudioHead, *queueAudioTail, *queueVideoHead, *queueVideoTail,
+        *funnelAudio, *funnelVideo;
 };
 
 bool handleElementCheck(std::array<GstElement *, 10> elements) {
@@ -38,22 +39,56 @@ bool handleElementCheck(std::array<GstElement *, 10> elements) {
     - in order to make sure audio and video are on the same with timestamps <--
     - need a funnel to bring pipeline back to filesink
 
-                          --- PIPELINE VISUAL DRAFT ---
-                     __queue__audioconvert__audioresample__
-                    /                                      \
-     v4l2src--tee---                                        ---funnel--filesink
-                    \__queue____________________videorate__/
+                             --- PIPELINE VISUAL DRAFT ---
+                        v4l2src__videoconvert__(nvh264enc)__
+                                                            \
+                                                             --mp4mux__filesink
+                       alsasrc__audioconvert__(audioencoder)/
+
+
+gst-launch-1.0 -e \
+mp4mux name=mux ! filesink location=video.mp4 \
+v4l2src ! videoconvert ! nvh264enc ! queue ! mux. \
+alsasrc ! audioconvert ! lamemp3enc ! queue ! mux.
+
+    (video)                             (audio)
+    source  v4l2src                     source  alsasrc
+            (x-raw)                             (x-raw)
+            (mpeg)
+            (mpegts)
+            (x-av1)
+            (x-bayer)
+            (x-dv)
+            (x-fwht)
+            (x-h263)
+            (x-h264)
+            (x-h265)
+            (x-pwc1)
+            (x-pwc2)
+            (x-sonix)
+            (x-vp8)
+            (x-vp9)
+            (x-wmv)
+    enc     nvh264enc                   enc      lamemp3enc
+            (x-h264)                            (x-mpeg)
+    mux     mp4mux                      mux     mp4mux
+            (x-mpeg)                            (x-mpeg v: 1, 4)
+            (x-divx)                            (x-ac3)
+            (x-h264)                            (x-eac3)
+            (x-h265)                            (x-alac)
+            (x-h266)                            (x-opus)
+            (x-mp4-part)
+            (x-av1)
+            (x-vp9)
+
 */
 
 int main(int argc, char *argv[]) {
     // handleBanner();
 
-    VideoData videoData;
-    AudioData audioData;
-    PadData   pad;
     // GstBus              *bus;
     GstStateChangeReturn ret;
-    GstElement          *pipeline, *tee, *source, *sink, *funnel;
+    GstElement          *pipeline, *source, *sink;
 
     gst_init(&argc, &argv);
 
@@ -61,25 +96,11 @@ int main(int argc, char *argv[]) {
     pipeline = gst_pipeline_new("anchor_pipeline");
                                                     // video/audio source
     source              = gst_element_factory_make("v4l2src", "VA_source");
-    tee                 = gst_element_factory_make("tee", "tee");
-    videoData.queue     = gst_element_factory_make("queue", "video_queue");
-    videoData.videorate = gst_element_factory_make("videorate", "video_rate");
-    audioData.queue     = gst_element_factory_make("queue", "audio_queue");
-    audioData.convert   = gst_element_factory_make("audioconvert", "audio_converter");
-    audioData.resample  = gst_element_factory_make("audioresample", "audio_resampler");
-    funnel              = gst_element_factory_make("funnel", "funnel");
     sink                = gst_element_factory_make("filesink", "file_output");
 
     const std::array<GstElement *, 10> currentElements = {
         pipeline,
         source,
-        tee,
-        videoData.queue,
-        videoData.videorate,
-        audioData.queue,
-        audioData.convert,
-        audioData.resample,
-        funnel,
         sink
     };
     // clang-format on
@@ -93,55 +114,6 @@ int main(int argc, char *argv[]) {
     g_object_set(sink, "location", "../output/video.mp4", NULL);
     g_object_set(source, "do-timestamp", TRUE, NULL);
 
-    // clang-format off
-    gst_bin_add_many(
-            (GstBin *)(pipeline), 
-            source,
-            tee,
-            videoData.queue,
-            videoData.videorate,
-            audioData.queue,
-            audioData.convert,
-            audioData.resample,
-            funnel,
-            sink,
-            NULL
-            );
-
-    if (
-        gst_element_link_many(source, tee, NULL) != TRUE ||
-        gst_element_link_many(videoData.queue, videoData.videorate, NULL) != TRUE ||
-        gst_element_link_many(audioData.queue, audioData.convert, audioData.resample, NULL) != TRUE ||
-        gst_element_link_many(funnel, sink, NULL)
-    ) {
-        std::cout << "elements could not be linked\n";
-        gst_object_unref(pipeline);
-        return 1;
-    }
-    // clang-format on
-
-    // connect pads to elements
-    pad.teeVideo = gst_element_request_pad_simple(tee, "pad_tee_video");
-    std::cout << "video branch request received: " << gst_pad_get_name(pad.teeVideo);
-    pad.queueVideo  = gst_element_get_static_pad(videoData.queue, NULL);
-    pad.funnelVideo = gst_element_request_pad_simple(funnel, "pad_funnel_video");
-    std::cout << "video merge request received: " << gst_pad_get_name(pad.funnelVideo);
-
-    pad.teeAudio = gst_element_request_pad_simple(tee, "pad_tee_audio");
-    std::cout << "audio branch request received: " << gst_pad_get_name(pad.teeAudio);
-    pad.queueAudio  = gst_element_get_static_pad(audioData.queue, NULL);
-    pad.funnelAudio = gst_element_request_pad_simple(funnel, "pad_funnel_audio");
-    std::cout << "audio merge request received: " << gst_pad_get_name(pad.funnelAudio);
-
-    // So gst_pad_link has to parameters a src pad and a sink pad.
-    // i'm currently trying to link 3 pads on one branch.
-    // tee's on request is src
-    // funnel's is on sink
-
-    // clang-format off
-    /* Under Construction */
-    // clang-format on
-
     ret = gst_element_set_state(pipeline, GST_STATE_PLAYING);
     if (ret == GST_STATE_CHANGE_FAILURE) {
         std::cout << "could not change pipeline state to playing\n";
@@ -153,5 +125,6 @@ int main(int argc, char *argv[]) {
 
     gst_element_set_state(pipeline, GST_STATE_NULL);
 
+    gst_object_unref(pipeline);
     return 0;
 }
