@@ -5,17 +5,9 @@
 #include <iostream>
 #include <unistd.h>
 
-struct VideoElementData {
-    GstElement *videorate, *queue;
-};
-
-struct AudioElementData {
-    GstElement *convert, *queue, *resample;
-};
-
-struct PadData {
-    GstPad *teeAudio, *teeVideo, *queueAudioHead, *queueAudioTail, *queueVideoHead, *queueVideoTail,
-        *funnelAudio, *funnelVideo;
+struct DataElement {
+    GstElement *audio_source, *video_source, *queue, *audio_convert, *video_convert, *audio_encoder,
+        *video_encoder, *mux, *sink;
 };
 
 bool handleElementCheck(std::array<GstElement *, 10> elements) {
@@ -49,59 +41,29 @@ bool handleElementCheck(std::array<GstElement *, 10> elements) {
 gst-launch-1.0 -e \
 mp4mux name=mux ! filesink location=video.mp4 \
 v4l2src ! videoconvert ! nvh264enc ! queue ! mux. \
-alsasrc ! audioconvert ! lamemp3enc ! queue ! mux.
-
-    (video)                             (audio)
-    source  v4l2src                     source  alsasrc
-            (x-raw)                             (x-raw)
-            (mpeg)
-            (mpegts)
-            (x-av1)
-            (x-bayer)
-            (x-dv)
-            (x-fwht)
-            (x-h263)
-            (x-h264)
-            (x-h265)
-            (x-pwc1)
-            (x-pwc2)
-            (x-sonix)
-            (x-vp8)
-            (x-vp9)
-            (x-wmv)
-    enc     nvh264enc                   enc      lamemp3enc
-            (x-h264)                            (x-mpeg)
-    mux     mp4mux                      mux     mp4mux
-            (x-mpeg)                            (x-mpeg v: 1, 4)
-            (x-divx)                            (x-ac3)
-            (x-h264)                            (x-eac3)
-            (x-h265)                            (x-alac)
-            (x-h266)                            (x-opus)
-            (x-mp4-part)
-            (x-av1)
-            (x-vp9)
-
+autoaudiosrc ! audioconvert ! lamemp3enc ! queue ! mux.
 */
 
 int main(int argc, char *argv[]) {
     // handleBanner();
 
     // GstBus              *bus;
+    DataElement          element;
     GstStateChangeReturn ret;
-    GstElement          *pipeline, *source, *sink;
+    GstElement          *pipeline;
 
     gst_init(&argc, &argv);
 
     // clang-format off
     pipeline = gst_pipeline_new("anchor_pipeline");
                                                     // video/audio source
-    source              = gst_element_factory_make("v4l2src", "VA_source");
-    sink                = gst_element_factory_make("filesink", "file_output");
+    element.video_source              = gst_element_factory_make("v4l2src", "VA_source");
+    element.sink                = gst_element_factory_make("filesink", "file_output");
 
     const std::array<GstElement *, 10> currentElements = {
         pipeline,
-        source,
-        sink
+        element.video_source,
+        element.sink
     };
     // clang-format on
 
