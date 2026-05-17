@@ -121,7 +121,6 @@ int main(int argc, char *argv[]) {
     gst_object_unref(pad.queue_audio);
     gst_object_unref(pad.queue_video);
     ret = gst_element_set_state(pipeline, GST_STATE_PLAYING);
-    std::cout << "ret: " << ret << '\n';
 
     if (ret == GST_STATE_CHANGE_FAILURE) {
         std::cout << "could not change pipeline state to playing\n";
