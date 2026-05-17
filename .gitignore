@@ -1,0 +1,13 @@
+# --- Build and Logs ---
+anchor.txt
+output/
+ninja/
+ninja-debug/
+*.log
+
+# --- Environment Variables ---
+.env
+
+# --- IDE Settings ---
+.clang-format
+

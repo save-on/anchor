@@ -1,0 +1,36 @@
+        /////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+       ////                                          X  x       \\\\
+      ////        //////////////       \\\\\\\\\     ____        \\\\
+     ////             ////              \\\     \\\               \\\\
+    ////   >  <     ////      ////       \\\      \\\   \\\\       \\\\
+   ////    ~~~~   ////      //  //  |  |  \\\    \\\    \\  \\      \\\\
+  ////          ////        ////    \__/   \\\\\\\\       \\\\       \\\\ 
+ ////                                                                 \\\\
+/////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+>> Anchor Plan <<
+
+*Record*
+> Build Record pipeline
+  - Should take in webcame souce *
+  - bring it to screen sink *
+  - update so that sink is a file (filesink, rsfilesink)
+   - Video must be written to file *
+   Bugs
+   - Video playback is fast when recording is dark (could be a camera issue)*
+   - Audio playback on file not working
+
+*Terminate*
+  -Should be waiting for a signal upon each loop ready to terminate
+   the program
+
+*Send Recording Chunks to file*
+ !Would have to create a dir to store the chunks(HLS) should include
+  date timestamp
+ !May have to create custom filters
+ !These Filters should take in data via a source pad
+ !And send them out via a sink pad
+ !Should convert the data into an appropriate extensions
+  for chunked video
+
+

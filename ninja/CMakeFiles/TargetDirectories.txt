@@ -1,3 +1,0 @@
-/home/saveon/bugGenerator/cpp/anchor/ninja/CMakeFiles/anchor.dir
-/home/saveon/bugGenerator/cpp/anchor/ninja/CMakeFiles/edit_cache.dir
-/home/saveon/bugGenerator/cpp/anchor/ninja/CMakeFiles/rebuild_cache.dir
