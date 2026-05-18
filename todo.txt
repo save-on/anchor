@@ -10,27 +10,42 @@
 
 >> Anchor Plan <<
 
-*Record*
-> Build Record pipeline
-  - Should take in webcame souce *
-  - bring it to screen sink *
-  - update so that sink is a file (filesink, rsfilesink)
-   - Video must be written to file *
+*Record* (process)
+!start/stop recording *
+!save video file reliably *
+!audio/video sync *
+!file naming/timestamps
    Bugs
-   - Video playback is fast when recording is dark (could be a camera issue)*
-   - Audio playback on file not working
+   !Video playback is fast when recording is dark (could be a camera issue)*
+   !Audio playback on file not working *
+
+*Chunking*
+!split recording into segments (e.g. 5–10 sec chunks)
+!write rolling files
+!manifest/index
+
+*Upload pipeline*
+!upload chunks as they’re produced
+!retry failed uploads
+!local queue if offline
+!server acknowledges receipt
 
 *Terminate*
-  -Should be waiting for a signal upon each loop ready to terminate
-   the program
+!send EOS when something feed is stopped
+!when EOS stops try uploading last chunk again
+!begin escalation
 
-*Send Recording Chunks to file*
- !Would have to create a dir to store the chunks(HLS) should include
-  date timestamp
- !May have to create custom filters
- !These Filters should take in data via a source pad
- !And send them out via a sink pad
- !Should convert the data into an appropriate extensions
-  for chunked video
+*Escalation*
+!trusted contacts
+!timed release
+!email/SMS delivery
+!optional public release
+
+*Security*
+!encryption
+!tamper logs/hashes
+!background behavior?
+!crash recovery
+!app relaunch continuation
 
 

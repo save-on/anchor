@@ -8,6 +8,3 @@ ninja-debug/
 # --- Environment Variables ---
 .env
 
-# --- IDE Settings ---
-.clang-format
-
