@@ -42,6 +42,9 @@
 !email/SMS delivery
 !optional public release
 
+*Quality*
+!Adaptive Bitrate Streaming
+
 *Security*
 !encryption
 !tamper logs/hashes
