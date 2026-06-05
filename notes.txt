@@ -1,0 +1,37 @@
+========Notes========
+
+*Live Streaming*
+- RTMP
+- DASH
+
+*On-Demand(Pre-recorded)*
+- HTTP Streaming
+- DASH
+
+*Peer-to-peer*
+
+->Aspects of video streaming<-
+*Bitrate*
+- Amount of data used to represent a piece of audio/video
+- The higher the bit rate, the more information is transferred and the 
+  higher the quality of the audio or video
+- Higher bitrate require more storage and bandwidth to transfer
+
+*Adaptive Bitrate Streaming(ABS)*
+- Adjust the quality of the video based on the users internet
+  speed, ensuring the video can stream smoothly without
+  buffering or interruption
+- ABS encodes the video at multiple bitrates
+
+*Dynamic-Adaptive-Streaming-over-HTTP(DASH)*
+- breaks content into a sequence of small segments, which are served over
+  HTTP
+- Each segment contains a small interval of playback time
+- The content is made into a variety of different bitrates
+-- dashsink2
+
+*RTMP*
+
+*HTTP*
+
+

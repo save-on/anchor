@@ -2,7 +2,6 @@
 #include <gst/gst.h>
 #include <gst/gstmessage.h>
 #include <iostream>
-#include <string>
 #include <unistd.h>
 #include <vector>
 
@@ -132,12 +131,10 @@ int main(int argc, char *argv[]) {
     bus = gst_element_get_bus(pipeline);
     msg = gst_bus_timed_pop_filtered(bus, GST_CLOCK_TIME_NONE,
                                      GstMessageType(GST_MESSAGE_ERROR | GST_MESSAGE_EOS));
-
     gst_element_release_request_pad(element.mux, pad.mux_audio);
     gst_element_release_request_pad(element.mux, pad.mux_video);
     gst_object_unref(pad.mux_audio);
     gst_object_unref(pad.mux_video);
-
     if (msg != NULL)
         gst_message_unref(msg);
     gst_object_unref(bus);
