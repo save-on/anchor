@@ -14,7 +14,8 @@
 !start/stop recording *
 !save video file reliably *
 !audio/video sync *
-!file naming/timestamps
+!timestamp*
+!file naming
    Bugs
    !Video playback is fast when recording is dark (could be a camera issue)*
    !Audio playback on file not working *
@@ -40,6 +41,9 @@
 !timed release
 !email/SMS delivery
 !optional public release
+
+*Quality*
+!Adaptive Bitrate Streaming
 
 *Security*
 !encryption

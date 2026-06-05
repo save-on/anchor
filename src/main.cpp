@@ -7,15 +7,15 @@
 
 /*
               --- PIPELINE VISUAL DRAFT ---
-         v4l2src__videoconvert__(nvh264enc)__queue__
-                                                    \
-                                                     --mp4mux__filesink
-   autoaudiosrc__audioconvert__(lamemp3enc)__queue__/
+         v4l2src__timeoverlay__videoconvert__(nvh264enc)__queue__
+                                                                 \
+                                                                  --mp4mux__filesink
+                autoaudiosrc__audioconvert__(lamemp3enc)__queue__/
 */
 
 struct ElementData {
-    GstElement *audio_source, *video_source, *video_queue, *audio_queue, *audio_convert,
-        *video_convert, *audio_encoder, *video_encoder, *mux, *sink;
+    GstElement *audio_source, *video_source, *time_overlay, *video_queue, *audio_queue,
+        *audio_convert, *video_convert, *audio_encoder, *video_encoder, *mux, *sink;
 };
 
 struct PadData {
@@ -46,6 +46,7 @@ int main(int argc, char *argv[]) {
 
     pipeline              = gst_pipeline_new("anchor_pipeline");
     element.video_source  = gst_element_factory_make("v4l2src", "video_source");
+    element.time_overlay  = gst_element_factory_make("timeoverlay", "time_overlay");
     element.audio_source  = gst_element_factory_make("autoaudiosrc", "audio_source");
     element.video_convert = gst_element_factory_make("videoconvert", "video_convert");
     element.audio_convert = gst_element_factory_make("audioconvert", "audio_convert");
@@ -60,6 +61,7 @@ int main(int argc, char *argv[]) {
     const std::vector<GstElement *> currentElements = {
         pipeline,
         element.video_source,
+        element.time_overlay,
         element.audio_source,
         element.video_convert,
         element.audio_convert,
@@ -78,15 +80,16 @@ int main(int argc, char *argv[]) {
     // configuration
     g_object_set(element.sink, "location", "../output/video.mp4", NULL);
     g_object_set(element.video_source, "do-timestamp", TRUE, NULL);
+    g_object_set(element.time_overlay, "halignment", 2, "valignment", 1, NULL);
 
-    gst_bin_add_many(GST_BIN(pipeline), element.video_source, element.video_convert,
-                     element.video_encoder, element.video_queue, element.audio_source,
-                     element.audio_convert, element.audio_encoder, element.audio_queue, element.mux,
-                     element.sink, NULL);
+    gst_bin_add_many(GST_BIN(pipeline), element.video_source, element.time_overlay,
+                     element.video_convert, element.video_encoder, element.video_queue,
+                     element.audio_source, element.audio_convert, element.audio_encoder,
+                     element.audio_queue, element.mux, element.sink, NULL);
 
     if (gst_element_link(element.mux, element.sink) != TRUE ||
-        gst_element_link_many(element.video_source, element.video_convert, element.video_encoder,
-                              element.video_queue, NULL) != TRUE ||
+        gst_element_link_many(element.video_source, element.time_overlay, element.video_convert,
+                              element.video_encoder, element.video_queue, NULL) != TRUE ||
         gst_element_link_many(element.audio_source, element.audio_convert, element.audio_encoder,
                               element.audio_queue, NULL) != TRUE) {
         std::cerr << "elements could not be linked\n";

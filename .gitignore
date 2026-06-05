@@ -8,3 +8,5 @@ ninja-debug/
 # --- Environment Variables ---
 .env
 
+# --- Notes ---
+notes.txt
