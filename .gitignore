@@ -4,6 +4,8 @@ output/
 ninja/
 ninja-debug/
 *.log
+*.ts
+*.mpd
 
 # --- Environment Variables ---
 .env
