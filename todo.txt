@@ -12,16 +12,20 @@
 
 *Record* (process)
 !start/stop recording *
+    Bugs
+        !Video playback is fast when recording is dark (could be a camera issue)*
+        !Audio playback on file not working *
+
 !save video file reliably *
 !audio/video sync *
 !timestamp*
 !file naming
-   Bugs
-   !Video playback is fast when recording is dark (could be a camera issue)*
-   !Audio playback on file not working *
 
 *Chunking*
-!split recording into segments (e.g. 5–10 sec chunks)
+!split recording into segments*
+    Bugs
+        !Dash isn't accepting the audio section of the pipline try adding a parser
+         and changing encoders*
 !write rolling files
 !manifest/index
 
