@@ -1,9 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"/home/saveon/bugGenerator/cpp/anchor/build/bin/cmake_install.cmake",
-		"/home/saveon/bugGenerator/cpp/anchor/build/bin/pipeline/cmake_install.cmake",
-		"/home/saveon/bugGenerator/cpp/anchor/build/bin/pipeline/pipelineConsumer/cmake_install.cmake"
-	],
-	"Parallel" : false
-}
