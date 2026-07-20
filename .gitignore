@@ -2,6 +2,7 @@
 anchor.txt
 output/
 ninja/
+build/
 ninja-debug/
 *.log
 *.ts
