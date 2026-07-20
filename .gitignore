@@ -6,6 +6,7 @@ ninja-debug/
 *.log
 *.ts
 *.mpd
+compile_commands.json
 
 # --- Environment Variables ---
 .env

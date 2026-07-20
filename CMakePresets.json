@@ -1,0 +1,16 @@
+{
+    "version": 4,
+    "configurePresets": [
+        {
+            "name": "default",
+            "displayName": "DefaultPreset",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/bin",
+            "cacheVariables": {
+                "BUILD_PRODUCER": "OFF",
+                "BUILD_CONSUMER": "ON",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+            }
+        }
+    ]
+}

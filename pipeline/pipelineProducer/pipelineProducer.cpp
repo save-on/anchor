@@ -2,6 +2,7 @@
 #include <gst/gstmessage.h>
 #include <iostream>
 #include <unistd.h>
+
 #include <vector>
 
 /*
@@ -77,8 +78,6 @@ int main(int argc, char *argv[]) {
     if (handleElementCheck(currentElements))
         return 1;
 
-    // configuration
-
     // element.dash configs to look at
     // mpd-filename
     // mpd-root-path
@@ -131,7 +130,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    sleep(10);
+    sleep(50);
 
     // initiate the eos
     gst_element_send_event(pipeline, gst_event_new_eos());
